@@ -81,8 +81,8 @@ const FeedClaim: React.FC<IHomeProps> = () => {
             width: isSmallScreen ? '100%' : '75%',
             p: '0 10px',
             background: '#0a1c1d',
-            ml: isSmallScreen ? 0 : '130px',
-            mt: isSmallScreen ? '140px' : '90px',
+            // ml: isSmallScreen ? 0 : '0px',
+            mt: isSmallScreen ? '12vh' : '90px',
             boxShadow: 20,
             bgcolor: '#0a1c1d',
             flexDirection: 'column'
