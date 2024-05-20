@@ -8,7 +8,7 @@ import Register from './containers/Register'
 import Form from './containers/Form'
 import Search from './containers/Search'
 import './App.css'
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material'
+import { CssBaseline, ThemeProvider, createTheme, GlobalStyles } from '@mui/material'
 import Box from '@mui/material/Box'
 import FeedClaim from './containers/feedOfClaim/index'
 import Rate from './components/Rate'
@@ -24,6 +24,7 @@ const App = () => {
   const [isSnackbarOpen, toggleSnackbar] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
   const [metaNav, setMetaNav] = useState(false)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -40,6 +41,15 @@ const App = () => {
     const isAuthenticated = checkAuth()
     if (!isAuthenticated && location.pathname === '/') {
       navigate('/feed')
+    }
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
     }
   }, [])
 
@@ -71,54 +81,83 @@ const App = () => {
       }
     }
   })
+  const globalStyles = (
+    <GlobalStyles
+      styles={{
+        '::-webkit-scrollbar': {
+          width: '0',
+          height: '0'
+        },
+        body: {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none'
+        }
+      }}
+    />
+  )
+
+  const showFooter = location.pathname !== '/feed' || windowWidth < 800
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* Render the navigation component only if the user is not on the login or register page */}
+      {globalStyles}
+
       {!isLoginPage && !isRegisterPage && <Navbar isAuth={checkAuth()} />}
       <Box
         sx={{
-          position: 'relative',
-          backgroundColor: '#0a1c1d',
-          minHeight: '100vh',
           display: 'flex',
-          width: '100%',
           flexDirection: 'column',
-          alignItems: 'center',
+          minHeight: '100vh',
+          backgroundColor: '#0a1c1d',
+          width: '100%',
           fontSize: 'calc(3px + 2vmin)',
           color: 'rgb(37, 3, 3)',
-          overflow: 'hidden',
-          justifyContent: 'center',
-          paddingBottom: '5.5rem'
+          overflow: 'hidden'
         }}
       >
         <Snackbar snackbarMessage={snackbarMessage} isSnackbarOpen={isSnackbarOpen} toggleSnackbar={toggleSnackbar} />
         <Loader open={loading} />
-        <Routes>
-          <Route path='feed' element={<FeedClaim {...commonProps} />} />
-          <Route path='report/:claimId' element={<ClaimReport />} />
-          <Route path='search' element={<Search {...commonProps} />} />
-          <Route path='/' element={<Form {...commonProps} />} />
-          <Route path='register' element={<Register {...commonProps} />} />
-          <Route path='login' element={<Login {...commonProps} />} />
-          <Route path='terms' element={<Terms />} />
-          <Route path='privacy' element={<Privacy />} />
-          <Route path='cookie' element={<Cookie />} />
-          <Route
-            path='/rate'
-            element={
-              checkAuth() ? <Rate {...commonProps} /> : <Navigate to='/login' replace state={{ from: location }} />
-            }
-          />
-          <Route
-            path='/validate'
-            element={
-              checkAuth() ? <Validate {...commonProps} /> : <Navigate to='/login' replace state={{ from: location }} />
-            }
-          />
-        </Routes>
-        {!isLoginPage && !isRegisterPage && <Footer />}
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            paddingBottom: '5.5rem'
+          }}
+        >
+          <Routes>
+            <Route path='feed' element={<FeedClaim {...commonProps} />} />
+            <Route path='report/:claimId' element={<ClaimReport />} />
+            <Route path='search' element={<Search {...commonProps} />} />
+            <Route path='/' element={<Form {...commonProps} />} />
+            <Route path='register' element={<Register {...commonProps} />} />
+            <Route path='login' element={<Login {...commonProps} />} />
+            <Route path='terms' element={<Terms />} />
+            <Route path='privacy' element={<Privacy />} />
+            <Route path='cookie' element={<Cookie />} />
+            <Route
+              path='/rate'
+              element={
+                checkAuth() ? <Rate {...commonProps} /> : <Navigate to='/login' replace state={{ from: location }} />
+              }
+            />
+            <Route
+              path='/validate'
+              element={
+                checkAuth() ? (
+                  <Validate {...commonProps} />
+                ) : (
+                  <Navigate to='/login' replace state={{ from: location }} />
+                )
+              }
+            />
+          </Routes>
+        </Box>
+        {showFooter && <Footer />}
       </Box>
     </ThemeProvider>
   )

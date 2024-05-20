@@ -12,9 +12,11 @@ const Footer: React.FC = () => {
         display: 'flex',
         justifyContent: isSmallScreen ? 'center' : 'space-between',
         padding: '1rem',
-        backgroundColor: '#1a1a1a',
+        textAlign: 'center',
+        alignItems: 'center',
+        gap: '1rem',
+        backgroundColor: '#1a1a1a00',
         color: '#ffffff',
-        position: 'fixed',
         bottom: 0,
         width: '100%'
       }}

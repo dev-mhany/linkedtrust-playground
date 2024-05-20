@@ -22,16 +22,51 @@ import {
 } from '@mui/material'
 import axios from 'axios'
 import Loader from '../../components/Loader'
+import AlwaysOpenSidebar from '../../components/FeedSidebar/AlwaysOpenSidebar'
+import FeedFooter from '../../components/FeedFooter'
 import { BACKEND_BASE_URL } from '../../utils/settings'
+
+const extractProfileName = (url: string) => {
+  let regex = /linkedin\.com\/(?:in|company)\/([^\\/]+)(?:\/.*)?/
+  const match = RegExp(regex).exec(url)
+  return match ? match[1].replace(/-/g, ' ') : url
+}
+const extractSourceName = (url: string) => {
+  let regex = /linkedin\.com\/(?:in|company)\/([^\\/]+)(?:\/.*)?/
+  const match = regex.exec(url)
+  return match ? match[1].replace(/\./g, ' ') : url
+}
+
+const ClaimName = ({ claim }) => {
+  const displayName = extractProfileName(claim.name)
+
+  return (
+    <Typography variant='h6' sx={{ marginBottom: '10px' }} fontWeight='bold' color='#ffffff'>
+      {displayName}
+      <OpenInNewIcon sx={{ marginLeft: '5px', color: '#ffffff', fontSize: '1rem' }} />
+    </Typography>
+  )
+}
+const SourceLink = ({ claim }) => {
+  const displayLink = extractSourceName(claim.source_link)
+
+  return (
+    <Typography variant='body2' sx={{ color: '#ffffff' }}>
+      From: {displayLink}
+    </Typography>
+  )
+}
 
 const FeedClaim: React.FC<IHomeProps> = () => {
   const [claims, setClaims] = useState<Array<Claim>>([])
+  const [isAuth, setIsAuth] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [selectedIndex, setSelectedIndex] = useState<null | number>(null)
   const navigate = useNavigate()
   const theme = useTheme()
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const isMediumScreen = useMediaQuery(theme.breakpoints.down(800))
 
   useEffect(() => {
     setIsLoading(true)
@@ -43,6 +78,12 @@ const FeedClaim: React.FC<IHomeProps> = () => {
       })
       .catch(err => console.error(err))
       .finally(() => setIsLoading(false))
+    const token = localStorage.getItem('accessToken')
+    if (token) {
+      setIsAuth(true)
+    } else {
+      setIsAuth(false)
+    }
   }, [])
 
   const handleValidation = (subject: any, id: number) => {
@@ -78,18 +119,15 @@ const FeedClaim: React.FC<IHomeProps> = () => {
           sx={{
             position: 'center',
             justifyContent: 'center',
-            width: isSmallScreen ? '100%' : '50%',
+            width: isMediumScreen ? '100%' : '50%',
             p: '0 10px',
-            background: '#0a1c1d',
-            // ml: isSmallScreen ? 0 : '0px',
-            mt: isSmallScreen ? '12vh' : '90px',
-            boxShadow: 20,
-            bgcolor: '#0a1c1d',
+            mt: isSmallScreen ? '6vh' : '55px',
             flexDirection: 'column'
           }}
         >
+          {!isMediumScreen && <AlwaysOpenSidebar isAuth={isAuth} />}
           {claims.map((claim: any, index: number) => (
-            <div key={claim.id}>
+            <Box key={claim.id}>
               <Card
                 sx={{
                   maxWidth: 'fit',
@@ -106,12 +144,9 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                 <Box sx={{ display: 'block', position: 'relative', width: '100%' }}>
                   <CardContent>
                     <a href={claim.link} target='_blank' rel='noopener noreferrer' style={{ textDecoration: 'none' }}>
-                      <Typography variant='h6' sx={{ marginBottom: '10px' }} fontWeight={'bold'} color='#ffffff'>
-                        {claim.name}
-                        <OpenInNewIcon sx={{ marginLeft: '5px', color: '#ffffff', fontSize: '1rem' }} />
-                      </Typography>
+                      <ClaimName claim={claim} />
                     </a>
-                    <Typography variant='body2' sx={{ marginBottom: '10px', color: '#ffffff' }}>
+                    <Typography variant='body2' sx={{ marginBottom: '10px', color: '#4C726F' }}>
                       {new Date(claim.effective_date).toLocaleDateString('en-US', {
                         year: 'numeric',
                         month: 'long',
@@ -142,13 +177,14 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                       onClick={() => handleValidation(claim.link, claim.claim_id)}
                       startIcon={<CheckCircleIcon />}
                       sx={{
-                        color: 'white',
                         fontSize: '10px',
                         fontWeight: 'bold',
                         marginRight: '10px',
                         p: '4px',
+                        color: 'white',
                         '&:hover': {
-                          backgroundColor: '#00695f'
+                          backgroundColor: '#00695f',
+                          color: 'white'
                         }
                       }}
                     >
@@ -232,7 +268,7 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         transform: 'rotate(90deg)',
-                        color: '#009688'
+                        color: '#4C726F'
                       }}
                     >
                       <MoreVertIcon />
@@ -255,15 +291,14 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                     sx={{
                       '& .MuiPaper-root': {
                         backgroundColor: '#172d2d',
-                        color: '#ffffff',
-                        border: '1px solid #009688'
+                        color: '#ffffff'
                       }
                     }}
                   >
                     {claim.source_link && (
                       <MenuItem onClick={() => window.open(claim.source_link, '_blank')}>
                         <Typography variant='body2' color='#ffffff'>
-                          From: {claim.source_link}
+                          <SourceLink claim={claim} />
                         </Typography>
                         <OpenInNewIcon style={{ marginLeft: '5px' }} />
                       </MenuItem>
@@ -313,8 +348,16 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                   </Menu>
                 </Box>
               </Card>
-            </div>
+            </Box>
           ))}
+          <Box
+            sx={{
+              width: '30%',
+              bgcolor: '#0a1c1d'
+            }}
+          >
+            {!isMediumScreen && <FeedFooter />}
+          </Box>
         </Box>
       ) : (
         <Loader open={isLoading} />
