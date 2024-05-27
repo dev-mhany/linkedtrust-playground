@@ -18,9 +18,6 @@ test('Form', () => {
         toggleSnackbar={mockToggleSnackbar}
         setSnackbarMessage={mockSetSnackbarMessage}
         setLoading={mockSetLoading}
-        setIsSnackbarOpen={function (isOpen: boolean): void {
-          throw new Error('Function not implemented.')
-        }}
       />
     )
 
@@ -67,9 +64,6 @@ test('Form', () => {
         toggleSnackbar={mockToggleSnackbar}
         setSnackbarMessage={mockSetSnackbarMessage}
         setLoading={mockSetLoading}
-        setIsSnackbarOpen={function (isOpen: boolean): void {
-          throw new Error('Function not implemented.')
-        }}
       />
     )
 

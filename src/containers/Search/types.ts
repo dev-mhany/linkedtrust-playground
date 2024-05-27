@@ -1,5 +1,5 @@
 interface IHomeProps {
-  setIsSnackbarOpen: any
+  toggleSnackbar: any
   setSnackbarMessage: any
   setLoading: any
 }

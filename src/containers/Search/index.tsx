@@ -14,7 +14,7 @@ const Search = (homeProps: IHomeProps) => {
   const search = useLocation().search
   const theme = useTheme()
 
-  const { setLoading, setSnackbarMessage, setIsSnackbarOpen } = homeProps
+  const { setLoading, setSnackbarMessage, toggleSnackbar } = homeProps
   const ref = useRef<any>(null)
   const query = new URLSearchParams(search).get('query')
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -29,8 +29,8 @@ const Search = (homeProps: IHomeProps) => {
   const runCy = () => {
     if (!cy) return
     cy.layout({
-      // name: 'circle',
-      name: 'breadthfirst',
+      name: 'circle',
+      // name: 'breadthfirst',
       padding: isArange ? 110 : isSmallScreen ? (special ? 90 : 10) : 70,
       animate: true,
       animationDuration: 1000
@@ -51,10 +51,10 @@ const Search = (homeProps: IHomeProps) => {
         cy.add(parsedClaims)
       } else {
         setSnackbarMessage('No results found')
-        setIsSnackbarOpen(true)
+        toggleSnackbar(true)
       }
     } catch (err: any) {
-      setIsSnackbarOpen(true)
+      toggleSnackbar(true)
       setSnackbarMessage(err.message)
     } finally {
       setLoading(false)
@@ -75,10 +75,10 @@ const Search = (homeProps: IHomeProps) => {
         cy.add({ nodes: newNodes, edges: newEdges } as any)
       } else {
         setSnackbarMessage('No results found')
-        setIsSnackbarOpen(true)
+        toggleSnackbar(true)
       }
     } catch (err: any) {
-      setIsSnackbarOpen(true)
+      toggleSnackbar(true)
       setSnackbarMessage(err.message)
     } finally {
       setLoading(false)
@@ -188,10 +188,7 @@ const Search = (homeProps: IHomeProps) => {
         selectedClaim={selectedClaim}
         setLoading={setLoading}
         setSnackbarMessage={setSnackbarMessage}
-        setIsSnackbarOpen={setIsSnackbarOpen}
-        toggleSnackbar={function (toggle: boolean): void {
-          throw new Error('Function not implemented.')
-        }}
+        toggleSnackbar={toggleSnackbar}
       />
 
       <Box ref={ref} sx={styles.cy} />

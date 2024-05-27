@@ -1,9 +1,13 @@
 const isValidUrl = (urlString: string) => {
-  let inputElement = document.createElement('input')
+  var inputElement = document.createElement('input')
   inputElement.type = 'url'
   inputElement.value = urlString
 
-  return inputElement.checkValidity()
+  if (!inputElement.checkValidity()) {
+    return false
+  } else {
+    return true
+  }
 }
 
 const getLabel = (uri: any) => {
@@ -11,7 +15,7 @@ const getLabel = (uri: any) => {
     if (uri.hostname === 'trustclaims.whatscookin.us') {
       return decodeURIComponent(uri.pathname.split('/').pop())
     }
-    return `Host:\n${uri.origin}\n\nPath:\n${uri.pathname}`
+    return `Host:\n${uri.origin}\n\n Path:\n${uri.pathname}`
   } else {
     return uri
   }
@@ -21,6 +25,7 @@ const parseClaims = (claims: any) => {
   const elements: any[] = []
 
   claims.forEach((claim: any) => {
+    // adding subject node
     if (claim.subject) {
       let uri: any
       if (isValidUrl(claim.subject)) uri = new URL(claim.subject)
@@ -32,11 +37,11 @@ const parseClaims = (claims: any) => {
         data: {
           id: claim.subject,
           label: label
-        },
-        style: { shape: 'round-rectangle' }
+        }
       })
     }
 
+    // adding object node
     if (claim.object) {
       let uri: any
       if (isValidUrl(claim.object)) uri = new URL(claim.object)
@@ -48,11 +53,10 @@ const parseClaims = (claims: any) => {
         data: {
           id: claim.object,
           label: label
-        },
-        style: { shape: 'round-rectangle' }
+        }
       })
     }
-
+    // adding edge between subject and object
     if (claim.subject && claim.object)
       elements.push({
         data: {
@@ -71,6 +75,7 @@ const parseMultipleNodes = (data: any) => {
   const edges: any[] = []
 
   data.forEach((node: any) => {
+    // adding subject node
     parseSingleNode(nodes, edges, node)
   })
   return { nodes, edges }
@@ -78,59 +83,57 @@ const parseMultipleNodes = (data: any) => {
 
 const getNodeData = (node: any) => {
   let uri = node.nodeUri
+  // could do this - if we used a trustclaims uri separate the path part
+  // not important - just here for reference from before
+  /*if (isValidUrl(uri)) {
+    let uriObj = new URL(node.nodeUri)
+    if (uriObj.hostname === 'trustclaims.whatscookin.us') {
+      let decodedUri = decodeURIComponent(uri.pathname.split('/').pop())
+      uri = decodedUri.pathname
+    }
+  }*/
 
   interface NodeData {
     data: {
       id: string
       label: string
+      raw: any
     }
     style?: {
       [key: string]: any
     }
   }
-
   let label = node.name || uri
-  if (label === 'Not Acceptable!' || label === 'Not Acceptable') {
+  if (label == 'Not Acceptable!' || label == 'Not Acceptable') {
     console.log('Node name is ' + node.name)
     label = ''
   }
 
-  const calculatedWidth = label.length < 17 ? 72 : 'label'
-
   const nodeData: NodeData = {
     data: {
       id: node.id.toString(),
-      label: label.substring(0, 42)
-    },
-    style: {
-      shape: 'round-rectangle',
-      'background-color': '#3E5348',
-      width: calculatedWidth,
-      height: 72,
-      color: '#ecf0f1',
-      'font-weight': 'bold',
-      'text-halign': 'center',
-      'text-valign': 'center',
-      'text-wrap': 'wrap',
-      'padding-left': '10px',
-      'padding-right': '10px',
-      'padding-top': '10px',
-      'padding-bottom': '10px',
-      'border-width': '2px',
-      'border-color': '#3E5348'
+      label: label,
+      raw: node
+    }
+  }
+  if (node.entType === 'CLAIM') {
+    nodeData.style = {
+      shape: 'square'
+    }
+  } else {
+    nodeData.style = {
+      shape: 'circle'
     }
   }
 
   if (node.image) {
     nodeData.style = {
-      ...nodeData.style,
       'background-image': [node.image.replace(/\?.+$/, '')],
       'background-fit': 'cover cover',
       'background-image-opacity': 1.0
     }
   } else if (node.thumbnail) {
     nodeData.style = {
-      ...nodeData.style,
       'background-image': [node.thumbnail.replace(/\?.+$/, '')],
       'background-fit': 'cover cover',
       'background-image-opacity': 0.4
@@ -140,14 +143,17 @@ const getNodeData = (node: any) => {
 }
 
 const parseSingleNode = (nodes: {}[], edges: {}[], node: any) => {
+  // adding subject node
   if (node.name && node.nodeUri) {
     const nodeData = getNodeData(node)
+
     nodes.push(nodeData)
   }
 
+  // adding edge between subject and object
   if (node.edgesFrom) {
     node.edgesFrom.map((e: any) => {
-      if (nodes.findIndex((n: any) => n.data.id === e.endNode.id.toString()) > -1) return
+      if (nodes.indexOf((n: any) => n.id === e.endNode.id.toString()) > -1) return
 
       const nodeData = getNodeData(e.endNode)
       nodes.push(nodeData)
@@ -168,7 +174,7 @@ const parseSingleNode = (nodes: {}[], edges: {}[], node: any) => {
 
   if (node.edgesTo) {
     node.edgesTo.map((e: any) => {
-      if (nodes.findIndex((n: any) => n.data.id === e.startNode.id.toString()) > -1) return
+      if (nodes.indexOf((n: any) => n.id === e.startNode.id.toString()) > -1) return
 
       const nodeData = getNodeData(e.startNode)
       nodes.push(nodeData)
