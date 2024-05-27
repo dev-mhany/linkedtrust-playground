@@ -21,7 +21,7 @@ import Privacy from './containers/Privacy'
 
 const App = () => {
   const [loading, setLoading] = useState(false)
-  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+  const [isSnackbarOpen, toggleSnackbar] = useState(false)
   const [snackbarMessage, setSnackbarMessage] = useState('')
   const [metaNav, setMetaNav] = useState(false)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
@@ -54,7 +54,7 @@ const App = () => {
   }, [])
 
   const commonProps = {
-    setIsSnackbarOpen,
+    toggleSnackbar,
     setSnackbarMessage,
     setLoading,
     setMetaNav
@@ -116,11 +116,7 @@ const App = () => {
           overflow: 'hidden'
         }}
       >
-        <Snackbar
-          snackbarMessage={snackbarMessage}
-          isSnackbarOpen={isSnackbarOpen}
-          setIsSnackbarOpen={setIsSnackbarOpen}
-        />
+        <Snackbar snackbarMessage={snackbarMessage} isSnackbarOpen={isSnackbarOpen} toggleSnackbar={toggleSnackbar} />
         <Loader open={loading} />
         <Box
           sx={{
@@ -137,57 +133,23 @@ const App = () => {
             <Route path='feed' element={<FeedClaim {...commonProps} />} />
             <Route path='report/:claimId' element={<ClaimReport />} />
             <Route path='search' element={<Search {...commonProps} />} />
-            <Route
-              path='/'
-              element={
-                <Form
-                  toggleSnackbar={function (toggle: boolean): void {
-                    throw new Error('Function not implemented.')
-                  }}
-                  {...commonProps}
-                />
-              }
-            />
+            <Route path='/' element={<Form {...commonProps} />} />
             <Route path='register' element={<Register {...commonProps} />} />
-            <Route
-              path='login'
-              element={
-                <Login
-                  toggleSnackbar={function (toggle: boolean): void {
-                    throw new Error('Function not implemented.')
-                  }}
-                  {...commonProps}
-                />
-              }
-            />
+            <Route path='login' element={<Login {...commonProps} />} />
             <Route path='terms' element={<Terms />} />
             <Route path='privacy' element={<Privacy />} />
             <Route path='cookie' element={<Cookie />} />
             <Route
               path='/rate'
               element={
-                checkAuth() ? (
-                  <Rate
-                    toggleSnackbar={function (toggle: boolean): void {
-                      throw new Error('Function not implemented.')
-                    }}
-                    {...commonProps}
-                  />
-                ) : (
-                  <Navigate to='/login' replace state={{ from: location }} />
-                )
+                checkAuth() ? <Rate {...commonProps} /> : <Navigate to='/login' replace state={{ from: location }} />
               }
             />
             <Route
               path='/validate'
               element={
                 checkAuth() ? (
-                  <Validate
-                    toggleSnackbar={function (toggle: boolean): void {
-                      throw new Error('Function not implemented.')
-                    }}
-                    {...commonProps}
-                  />
+                  <Validate {...commonProps} />
                 ) : (
                   <Navigate to='/login' replace state={{ from: location }} />
                 )

@@ -14,13 +14,13 @@ import { authenticateCeramic, ceramic, composeClient } from '../../composedb'
 import { useQueryParams } from '../../hooks'
 import { GITHUB_CLIENT_ID } from '../../utils/settings'
 import { useForm } from 'react-hook-form'
-import { useTheme, TextField } from '@mui/material'
-
+import { useTheme } from '@mui/material'
+import { TextField } from '@mui/material'
 import BackgroundImages from '../BackgroundImags'
 
 const githubUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}`
 
-const Login = ({ setIsSnackbarOpen, setSnackbarMessage, setLoading }: ILoginProps) => {
+const Login = ({ toggleSnackbar, setSnackbarMessage, setLoading }: ILoginProps) => {
   const theme = useTheme()
   const location = useLocation()
 
@@ -29,6 +29,9 @@ const Login = ({ setIsSnackbarOpen, setSnackbarMessage, setLoading }: ILoginProp
     handleSubmit,
     formState: { errors }
   } = useForm()
+
+  const loginButton = document.getElementById('loginButton')
+  const metamaskLink = document.getElementById('metamaskLink')
 
   const handleAuth = useCallback((accessToken: string, refreshToken: string) => {
     console.log('in handle auth, You have a token: ' + accessToken)
@@ -57,7 +60,7 @@ const Login = ({ setIsSnackbarOpen, setSnackbarMessage, setLoading }: ILoginProp
         })
         .catch(err => {
           setLoading(false)
-          setIsSnackbarOpen(true)
+          toggleSnackbar(true)
           setSnackbarMessage(err.message)
           console.error(err.message)
         })
@@ -100,7 +103,7 @@ const Login = ({ setIsSnackbarOpen, setSnackbarMessage, setLoading }: ILoginProp
     console.log('You pressed submit, congratulations')
     try {
       if (!email || !password) {
-        setIsSnackbarOpen(true)
+        toggleSnackbar(true)
         setSnackbarMessage('Both email and password are required fields.')
       } else {
         setLoading(true)
@@ -117,7 +120,7 @@ const Login = ({ setIsSnackbarOpen, setSnackbarMessage, setLoading }: ILoginProp
       }
     } catch (err: any) {
       setLoading(false)
-      setIsSnackbarOpen(true)
+      toggleSnackbar(true)
       setSnackbarMessage('User not Found!')
       console.error('Error: ', err?.message)
     }

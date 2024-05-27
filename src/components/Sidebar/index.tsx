@@ -33,18 +33,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isAuth, isOpen, toggleSidebar }) => {
           width: 240,
           boxSizing: 'border-box',
           backgroundColor: '#0a1c1d',
-          color: '#FFFFFF',
+          color: '#fff',
           marginTop: '64px'
         }
       }}
     >
       <List>
         <ListItemButton sx={{ gap: '1rem' }} onClick={toggleSidebar} onClickCapture={() => navigate('/feed')}>
-          <Home sx={{ color: '#FFFFFF' }} />
+          <Home sx={{ color: '#fff' }} />
           <ListItemText primary='Home' />
         </ListItemButton>
         <ListItemButton sx={{ gap: '1rem' }} onClick={toggleSidebar} onClickCapture={() => navigate('/search')}>
-          <Search sx={{ color: '#FFFFFF' }} />
+          <Search sx={{ color: '#fff' }} />
           <ListItemText primary='Search' />
         </ListItemButton>
         {isAuth ? (
@@ -52,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isAuth, isOpen, toggleSidebar }) => {
             <Button
               sx={{
                 width: '100%',
-                color: '#FFFFFF',
+                color: '#fff',
                 backgroundColor: 'primary.main',
                 '&:hover': {
                   backgroundColor: '#00695f'

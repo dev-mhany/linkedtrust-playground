@@ -126,7 +126,7 @@ const ProfileDropdown = ({ isAuth }: any) => {
             size='large'
             sx={{
               backgroundColor: 'primary.main',
-              color: '#FFFFFF',
+              color: '#fff',
               '&:hover': {
                 backgroundColor: '#00695f'
               }

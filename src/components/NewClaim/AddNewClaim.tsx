@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Dialog from '@mui/material/Dialog'
 import IHomeProps from '../../containers/Form/types'
 import { Form } from '../Form'
@@ -6,7 +6,7 @@ import { Form } from '../Form'
 const FormDialog = ({
   open,
   setOpen,
-  setIsSnackbarOpen,
+  toggleSnackbar,
   setSnackbarMessage,
   selectedClaim,
   setLoading
@@ -19,14 +19,11 @@ const FormDialog = ({
     <div>
       <Dialog open={open} onClose={handleClose}>
         <Form
-          setIsSnackbarOpen={setIsSnackbarOpen}
+          toggleSnackbar={toggleSnackbar}
           setSnackbarMessage={setSnackbarMessage}
           setLoading={setLoading}
           selectedClaim={selectedClaim}
           onCancel={handleClose}
-          toggleSnackbar={function (toggle: boolean): void {
-            throw new Error('Function not implemented.')
-          }}
         />
       </Dialog>
     </div>

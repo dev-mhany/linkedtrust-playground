@@ -17,7 +17,9 @@ instance.interceptors.request.use(config => {
   return config
 })
 
-type HaultedReqCb = (newAccessToken: string) => void
+interface HaultedReqCb {
+  (newAccessToken: string): void
+}
 
 let isRefreshing = false
 let tokenSubscribers: HaultedReqCb[] = []
@@ -63,7 +65,7 @@ instance.interceptors.response.use(
         })
       })
     }
-    return Promise.reject(new Error(error.message))
+    return Promise.reject(error)
   }
 )
 

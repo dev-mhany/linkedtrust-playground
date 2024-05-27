@@ -5,17 +5,17 @@ import { vi } from 'vitest'
 describe('Snackbar component', () => {
   it('renders snackbar message when open', () => {
     const snackbarMessage = 'Test message'
-    const setIsSnackbarOpen = vi.fn()
+    const toggleSnackbar = vi.fn()
     const { getByText } = render(
-      <Snackbar isSnackbarOpen={true} snackbarMessage={snackbarMessage} setIsSnackbarOpen={setIsSnackbarOpen} />
+      <Snackbar isSnackbarOpen={true} snackbarMessage={snackbarMessage} toggleSnackbar={toggleSnackbar} />
     )
     expect(getByText(snackbarMessage)).toBeInTheDocument()
   })
 
-  it('calls setIsSnackbarOpen when snackbar is closed', () => {
-    const setIsSnackbarOpen = vi.fn()
-    render(<Snackbar isSnackbarOpen={true} snackbarMessage='Test message' setIsSnackbarOpen={setIsSnackbarOpen} />)
+  it('calls toggleSnackbar when snackbar is closed', () => {
+    const toggleSnackbar = vi.fn()
+    render(<Snackbar isSnackbarOpen={true} snackbarMessage='Test message' toggleSnackbar={toggleSnackbar} />)
     fireEvent.click(screen.getByRole('button'))
-    expect(setIsSnackbarOpen).toHaveBeenCalledWith(false)
+    expect(toggleSnackbar).toHaveBeenCalledWith(false)
   })
 })

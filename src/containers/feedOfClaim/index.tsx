@@ -49,9 +49,9 @@ const ClaimName = ({ claim }: { claim: LocalClaim }) => {
   const displayName = extractProfileName(claim.name)
 
   return (
-    <Typography variant='h6' sx={{ marginBottom: '10px' }} fontWeight='bold' color='#FFFFFF'>
+    <Typography variant='h6' sx={{ marginBottom: '10px' }} fontWeight='bold' color='#ffffff'>
       {displayName}
-      <OpenInNewIcon sx={{ marginLeft: '5px', color: '#FFFFFF', fontSize: '1rem' }} />
+      <OpenInNewIcon sx={{ marginLeft: '5px', color: '#ffffff', fontSize: '1rem' }} />
     </Typography>
   )
 }
@@ -60,7 +60,7 @@ const SourceLink = ({ claim }: { claim: LocalClaim }) => {
   const displayLink = extractSourceName(claim.source_link)
 
   return (
-    <Typography variant='body2' sx={{ color: '#FFFFFF' }}>
+    <Typography variant='body2' sx={{ color: '#ffffff' }}>
       From: {displayLink}
     </Typography>
   )
@@ -147,7 +147,7 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                   flexDirection: isSmallScreen ? 'column' : 'row',
                   backgroundColor: selectedIndex === index ? '#2d3838' : '#172d2d',
                   filter: selectedIndex === index ? 'blur(0.8px)' : 'none',
-                  color: '#FFFFFF'
+                  color: '#ffffff'
                 }}
               >
                 <Box sx={{ display: 'block', position: 'relative', width: '100%' }}>
@@ -164,7 +164,7 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                     </Typography>
                     {claim.statement && (
                       <Typography
-                        sx={{ padding: '5px 1 1 5px', wordBreak: 'break-word', marginBottom: '1px', color: '#FFFFFF' }}
+                        sx={{ padding: '5px 1 1 5px', wordBreak: 'break-word', marginBottom: '1px', color: '#ffffff' }}
                       >
                         {claim.statement}
                       </Typography>
@@ -266,7 +266,7 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                       position: 'absolute',
                       top: '10px',
                       right: '10px',
-                      color: '#FFFFFF',
+                      color: '#ffffff',
                       cursor: 'pointer'
                     }}
                     onClick={event => handleMenuClick(event, index)}
@@ -300,13 +300,13 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                     sx={{
                       '& .MuiPaper-root': {
                         backgroundColor: '#172d2d',
-                        color: '#FFFFFF'
+                        color: '#ffffff'
                       }
                     }}
                   >
                     {claim.source_link && (
                       <MenuItem onClick={() => window.open(claim.source_link, '_blank')}>
-                        <Typography variant='body2' color='#FFFFFF'>
+                        <Typography variant='body2' color='#ffffff'>
                           <SourceLink claim={claim} />
                         </Typography>
                         <OpenInNewIcon style={{ marginLeft: '5px' }} />
@@ -314,42 +314,42 @@ const FeedClaim: React.FC<IHomeProps> = () => {
                     )}
                     {claim.how_known && (
                       <MenuItem>
-                        <Typography variant='body2' color='#FFFFFF'>
+                        <Typography variant='body2' color='#ffffff'>
                           How Known: {claim.how_known}
                         </Typography>
                       </MenuItem>
                     )}
                     {claim.aspect && (
                       <MenuItem>
-                        <Typography variant='body2' color='#FFFFFF'>
+                        <Typography variant='body2' color='#ffffff'>
                           Aspect: {claim.aspect}
                         </Typography>
                       </MenuItem>
                     )}
                     {claim.confidence !== 0 && (
                       <MenuItem>
-                        <Typography variant='body2' color='#FFFFFF'>
+                        <Typography variant='body2' color='#ffffff'>
                           Confidence: {claim.confidence}
                         </Typography>
                       </MenuItem>
                     )}
                     {claim.stars && (
                       <MenuItem>
-                        <Typography variant='body2' color='#FFFFFF'>
+                        <Typography variant='body2' color='#ffffff'>
                           Rating as Stars: {claim.stars}
                         </Typography>
                       </MenuItem>
                     )}
                     {claim.score && (
                       <MenuItem>
-                        <Typography variant='body2' color='#FFFFFF'>
+                        <Typography variant='body2' color='#ffffff'>
                           Rating as Score: {claim.score}
                         </Typography>
                       </MenuItem>
                     )}
                     {claim.amt && (
                       <MenuItem>
-                        <Typography variant='body2' color='#FFFFFF'>
+                        <Typography variant='body2' color='#ffffff'>
                           Amount of claim: $ {claim.amt}
                         </Typography>
                       </MenuItem>

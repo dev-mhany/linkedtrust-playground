@@ -1,6 +1,5 @@
 interface ILoginProps {
-  toggleSnackbar: (toggle: boolean) => void
-  setIsSnackbarOpen: any
+  toggleSnackbar: any
   setSnackbarMessage: any
   setLoading: any
 }

@@ -1,7 +1,7 @@
 import { IconButtonProps } from '@mui/material'
 
 export interface IHomeProps {
-  setIsSnackbarOpen: (toggle: boolean) => void
+  toggleSnackbar: (toggle: boolean) => void
   setSnackbarMessage: (message: string) => void
   setLoading: (isLoading: boolean) => void
 }

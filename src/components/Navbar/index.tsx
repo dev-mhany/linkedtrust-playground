@@ -49,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position='fixed' sx={{ backgroundColor: '#0a1c1d', color: '#FFFFFF' }}>
+      <AppBar position='fixed' sx={{ backgroundColor: '#0a1c1d', color: '#ffffff' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {(location.pathname !== '/feed' || isMediumScreen) && (
@@ -76,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
               variant='h6'
               component='div'
               sx={{
-                color: '#FFFFFF',
+                color: '#ffffff',
                 textAlign: 'center',
                 flexGrow: isSmallScreen ? 1 : 0
               }}
