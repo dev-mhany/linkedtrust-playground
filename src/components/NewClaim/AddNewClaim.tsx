@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Dialog from '@mui/material/Dialog'
 import IHomeProps from '../../containers/Form/types'
 import { Form } from '../Form'
@@ -24,6 +24,9 @@ const FormDialog = ({
           setLoading={setLoading}
           selectedClaim={selectedClaim}
           onCancel={handleClose}
+          setIsSnackbarOpen={function (isOpen: boolean): void {
+            throw new Error('Function not implemented.')
+          }}
         />
       </Dialog>
     </div>

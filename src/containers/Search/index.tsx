@@ -189,6 +189,9 @@ const Search = (homeProps: IHomeProps) => {
         setLoading={setLoading}
         setSnackbarMessage={setSnackbarMessage}
         setIsSnackbarOpen={setIsSnackbarOpen}
+        toggleSnackbar={function (toggle: boolean): void {
+          throw new Error('Function not implemented.')
+        }}
       />
 
       <Box ref={ref} sx={styles.cy} />
