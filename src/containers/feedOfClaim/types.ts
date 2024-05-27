@@ -4,6 +4,7 @@ export interface IHomeProps {
   toggleSnackbar: (toggle: boolean) => void
   setSnackbarMessage: (message: string) => void
   setLoading: (isLoading: boolean) => void
+  setIsSnackbarOpen: (isOpen: boolean) => void
 }
 export interface ExpandMoreProps extends IconButtonProps {
   expand: boolean

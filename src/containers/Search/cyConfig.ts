@@ -29,7 +29,7 @@ const cyConfig = (containerRef: any): CytoscapeOptions => {
         'line-style': 'dashed',
         'line-color': '#009688',
         'target-arrow-shape': 'none',
-        'curve-style': 'taxi', // Change curve style to straight to simplify the edges
+        'curve-style': 'taxi',
         'line-dash-pattern': [10, 10],
         'line-cap': 'round',
         'font-size': '10px',
@@ -43,26 +43,26 @@ const cyConfig = (containerRef: any): CytoscapeOptions => {
 
   const layoutOptions: BaseLayoutOptions = {
     name: 'breadthfirst',
-    fit: true, // whether to fit the viewport to the graph
-    directed: true, // whether the tree is directed downwards
-    padding: 30, // padding on fit
-    circle: false, // put depths in concentric circles if true, put depths top down if false
-    grid: true, // create an even grid into which the DAG is placed
-    spacingFactor: 1.75, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
-    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-    avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
-    nodeDimensionsIncludeLabels: false, // Excludes the label when calculating node bounding boxes for the layout algorithm
-    roots: undefined, // the roots of the trees
-    depthSort: undefined, // a sorting function to order nodes at equal depth. e.g. function(a, b){ return a.data('weight') - b.data('weight') }
-    animate: false, // whether to transition the node positions
-    animationDuration: 500, // duration of animation in ms if enabled
-    animationEasing: undefined, // easing of animation if enabled
+    // fit: true,
+    // directed: true,
+    // padding: 30,
+    // circle: false,
+    // grid: true,
+    // spacingFactor: 1.75,
+    // boundingBox: undefined,
+    // avoidOverlap: true,
+    // nodeDimensionsIncludeLabels: false,
+    // roots: undefined,
+    // depthSort: undefined,
+    // animate: false,
+    // animationDuration: 500,
+    // animationEasing: undefined,
 
-    ready: undefined, // callback on layoutready
-    stop: undefined, // callback on layoutstop
+    ready: undefined,
+    stop: undefined,
     transform: function (node, position) {
       return position
-    } // transform a given node position
+    }
   }
 
   return {

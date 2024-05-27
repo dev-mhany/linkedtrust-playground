@@ -130,10 +130,30 @@ const App = () => {
           }}
         >
           <Routes>
-            <Route path='feed' element={<FeedClaim {...commonProps} />} />
+            <Route
+              path='feed'
+              element={
+                <FeedClaim
+                  setIsSnackbarOpen={function (isOpen: boolean): void {
+                    throw new Error('Function not implemented.')
+                  }}
+                  {...commonProps}
+                />
+              }
+            />
             <Route path='report/:claimId' element={<ClaimReport />} />
-            <Route path='search' element={<Search {...commonProps} />} />
-            <Route path='/' element={<Form {...commonProps} />} />
+            <Route path='search' element={<Search setIsSnackbarOpen={undefined} {...commonProps} />} />
+            <Route
+              path='/'
+              element={
+                <Form
+                  setIsSnackbarOpen={function (isOpen: boolean): void {
+                    throw new Error('Function not implemented.')
+                  }}
+                  {...commonProps}
+                />
+              }
+            />
             <Route path='register' element={<Register {...commonProps} />} />
             <Route path='login' element={<Login {...commonProps} />} />
             <Route path='terms' element={<Terms />} />
@@ -142,14 +162,28 @@ const App = () => {
             <Route
               path='/rate'
               element={
-                checkAuth() ? <Rate {...commonProps} /> : <Navigate to='/login' replace state={{ from: location }} />
+                checkAuth() ? (
+                  <Rate
+                    setIsSnackbarOpen={function (isOpen: boolean): void {
+                      throw new Error('Function not implemented.')
+                    }}
+                    {...commonProps}
+                  />
+                ) : (
+                  <Navigate to='/login' replace state={{ from: location }} />
+                )
               }
             />
             <Route
               path='/validate'
               element={
                 checkAuth() ? (
-                  <Validate {...commonProps} />
+                  <Validate
+                    setIsSnackbarOpen={function (isOpen: boolean): void {
+                      throw new Error('Function not implemented.')
+                    }}
+                    {...commonProps}
+                  />
                 ) : (
                   <Navigate to='/login' replace state={{ from: location }} />
                 )
