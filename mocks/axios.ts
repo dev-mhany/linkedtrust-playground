@@ -1,7 +1,7 @@
 // src/mocks/axios.ts
 
-import { AxiosInstance } from 'axios'
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
+
 import MockAdapter from 'axios-mock-adapter'
 
 const mockAxios: AxiosInstance = axios.create()

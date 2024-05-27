@@ -2,7 +2,6 @@ import { DIDSession } from 'did-session'
 import { EthereumWebAuth, getAccountId } from '@didtools/pkh-ethereum'
 import type { CeramicApi } from '@ceramicnetwork/common'
 import type { ComposeClient } from '@composedb/client'
-import { CERAMIC_URL } from '../utils/settings'
 // import KeyDidResolver from 'key-did-resolver'
 // import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 

@@ -46,7 +46,7 @@ const tooltips = {
 }
 
 export const Form = ({
-  toggleSnackbar,
+  setIsSnackbarOpen,
   setSnackbarMessage,
   setLoading,
   selectedClaim,
@@ -145,7 +145,7 @@ export const Form = ({
         const { message, isSuccess } = await createClaim(payload)
 
         setLoading(false)
-        toggleSnackbar(true)
+        setIsSnackbarOpen(true)
         setSnackbarMessage(message)
         if (isSuccess) {
           navigate('/feed')
@@ -153,7 +153,7 @@ export const Form = ({
         }
       } else {
         setLoading(false)
-        toggleSnackbar(true)
+        setIsSnackbarOpen(true)
         setSnackbarMessage('Subject and Claim are required fields.')
       }
     }
@@ -217,7 +217,13 @@ export const Form = ({
     ],
     howKnown: ['first_hand', 'second_hand', 'website', 'physical_document']
   }
-
+  const getTitle = () => {
+    if (selectedClaim?.entType === 'CLAIM') {
+      return 'do you want to validate ?'
+    } else {
+      return 'what do you have to say about'
+    }
+  }
   return (
     <>
       <DialogTitle>
@@ -232,11 +238,7 @@ export const Form = ({
             fontWeight: 'bold'
           }}
         >
-          {selectedClaim
-            ? selectedClaim?.entType === 'CLAIM'
-              ? 'do you want to validate ?'
-              : 'what do you have to say about'
-            : 'Enter a Claim'}
+          {selectedClaim ? getTitle() : 'Enter a Claim'}
         </Typography>
         {selectedClaim?.name && selectedClaim?.entType !== 'CLAIM' && <Typography>{selectedClaim.name}</Typography>}
       </DialogTitle>
@@ -295,7 +297,7 @@ export const Form = ({
                 fullWidth
               >
                 {inputOptions.howKnown.map((howKnownText: string, index: number) => (
-                  <MenuItem value={howKnownMapping[howKnownText]}>
+                  <MenuItem key={index} value={howKnownMapping[howKnownText]}>
                     <Tooltip title={tooltips.howKnown[index]} placement='right' arrow>
                       <Box sx={{ width: '100%', height: '100%' }}>{howKnownText}</Box>
                     </Tooltip>
@@ -351,7 +353,7 @@ export const Form = ({
               />
             </Tooltip>
 
-            {!(selectedClaim?.entType === 'CLAIM') && (
+            {selectedClaim?.entType !== 'CLAIM' && (
               <>
                 {watchClaim === 'rated' ? (
                   <>
@@ -398,32 +400,28 @@ export const Form = ({
                     />
                   </>
                 ) : watchClaim === 'impact' ? (
-                  <>
-                    <FormControl fullWidth sx={{ mt: 1, width: '100%' }}>
-                      <InputLabel htmlFor='outlined-adornment-amount'>Value</InputLabel>
-                      <OutlinedInput
-                        {...register('amt')}
-                        id='outlined-adornment-amount'
-                        startAdornment={<InputAdornment position='start'>$</InputAdornment>}
-                        label='Amount'
-                      />
-                    </FormControl>
-                  </>
+                  <FormControl fullWidth sx={{ mt: 1, width: '100%' }}>
+                    <InputLabel htmlFor='outlined-adornment-amount'>Value</InputLabel>
+                    <OutlinedInput
+                      {...register('amt')}
+                      id='outlined-adornment-amount'
+                      startAdornment={<InputAdornment position='start'>$</InputAdornment>}
+                      label='Amount'
+                    />
+                  </FormControl>
                 ) : watchClaim === 'related' ? (
-                  <>
-                    <Tooltip title='What entity is the subject related to?' placement='right' arrow>
-                      <TextField
-                        {...register('object')}
-                        sx={{ ml: 1, mr: 1, width: '22ch' }}
-                        margin='dense'
-                        variant='outlined'
-                        fullWidth
-                        label='Object'
-                        key='object'
-                        type='text'
-                      />
-                    </Tooltip>
-                  </>
+                  <Tooltip title='What entity is the subject related to?' placement='right' arrow>
+                    <TextField
+                      {...register('object')}
+                      sx={{ ml: 1, mr: 1, width: '22ch' }}
+                      margin='dense'
+                      variant='outlined'
+                      fullWidth
+                      label='Object'
+                      key='object'
+                      type='text'
+                    />
+                  </Tooltip>
                 ) : (
                   // default case
                   <></>

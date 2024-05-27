@@ -15,9 +15,12 @@ test('Form', () => {
   test('submission with subject and claim', async () => {
     const { getByLabelText, getByText } = render(
       <Form
-        toggleSnackbar={mockToggleSnackbar}
+        setIsSnackbarOpen={mockToggleSnackbar}
         setSnackbarMessage={mockSetSnackbarMessage}
         setLoading={mockSetLoading}
+        toggleSnackbar={function (toggle: boolean): void {
+          throw new Error('Function not implemented.')
+        }}
       />
     )
 
@@ -61,9 +64,12 @@ test('Form', () => {
   test('submission without subject or claim', async () => {
     const { getByText } = render(
       <Form
-        toggleSnackbar={mockToggleSnackbar}
+        setIsSnackbarOpen={mockToggleSnackbar}
         setSnackbarMessage={mockSetSnackbarMessage}
         setLoading={mockSetLoading}
+        toggleSnackbar={function (toggle: boolean): void {
+          throw new Error('Function not implemented.')
+        }}
       />
     )
 

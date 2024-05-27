@@ -1,4 +1,4 @@
-import { ceramic, composeClient } from './ceramic_client.js'
+import { composeClient } from './ceramic_client.js'
 
 const CREATE_LINKED_CLAIM_MUTATION = `
   mutation CreateNewClaim($i:CreateLinkedClaimInput!) {
@@ -79,8 +79,7 @@ const PublishClaim = async (payload: LinkedClaimPayload): Promise<any> => {
     return { status: 500 }
   }
 
-  let { subject, claim, object, statement, aspect, howKnown, sourceURI, effectiveDate, confidence, stars, amt } =
-    payload
+  let { subject, claim, statement, aspect, howKnown, sourceURI, effectiveDate, confidence, stars, amt } = payload
 
   if (howKnown) {
     howKnown = howKnown.toUpperCase()
@@ -107,10 +106,10 @@ const PublishClaim = async (payload: LinkedClaimPayload): Promise<any> => {
     }
   }
 
-  if (stars) {
+  if (stars && stars !== 0) {
     variables['i']['content']['rating'] = {
       aspect: aspect || 'unknown',
-      stars: stars || 0,
+      stars: stars,
       score: stars / 5.0
     }
   }

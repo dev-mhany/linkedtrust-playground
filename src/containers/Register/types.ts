@@ -1,5 +1,5 @@
 interface IRegisterProps {
-  toggleSnackbar: any
+  setIsSnackbarOpen: any
   setSnackbarMessage: any
   setLoading: any
 }

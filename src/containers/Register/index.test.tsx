@@ -24,7 +24,7 @@ describe('Register component', () => {
   it('should render Register component', async () => {
     const { getByLabelText } = render(
       <MemoryRouter>
-        <Register toggleSnackbar={undefined} setSnackbarMessage={undefined} setLoading={undefined} />
+        <Register setIsSnackbarOpen={undefined} setSnackbarMessage={undefined} setLoading={undefined} />
       </MemoryRouter>
     )
     expect(getByLabelText('Email')).toBeInTheDocument()
@@ -35,7 +35,7 @@ describe('Register component', () => {
     mockAdapter.onPost(`${BACKEND_BASE_URL}/auth/signup`).reply(400, { error: 'Invalid registration details' })
     const { getByLabelText, queryByText } = render(
       <MemoryRouter>
-        <Register toggleSnackbar={undefined} setSnackbarMessage={undefined} setLoading={undefined} />
+        <Register setIsSnackbarOpen={undefined} setSnackbarMessage={undefined} setLoading={undefined} />
       </MemoryRouter>
     )
     const emailInput = getByLabelText('Email') as HTMLInputElement
@@ -58,7 +58,7 @@ describe('Register component', () => {
     mockAdapter.onPost('/auth/signup').reply(200)
     const { getByLabelText } = render(
       <MemoryRouter>
-        <Register toggleSnackbar={undefined} setSnackbarMessage={undefined} setLoading={undefined} />
+        <Register setIsSnackbarOpen={undefined} setSnackbarMessage={undefined} setLoading={undefined} />
       </MemoryRouter>
     )
     const emailInput = getByLabelText('Email') as HTMLInputElement

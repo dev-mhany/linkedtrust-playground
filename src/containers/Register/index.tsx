@@ -6,23 +6,20 @@ import IRegisterProps from './types'
 import styles from './styles'
 import { TextField, Box, Button } from '@mui/material'
 import BackgroundImages from '../BackgroundImags'
-import { useTheme } from '@mui/material'
 
-const Register = ({ toggleSnackbar, setSnackbarMessage, setLoading }: IRegisterProps) => {
+const Register = ({ setIsSnackbarOpen, setSnackbarMessage, setLoading }: IRegisterProps) => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors }
   } = useForm()
 
   const navigate = useNavigate()
-  const theme = useTheme()
 
   const onSubmit = handleSubmit(async ({ email, password }) => {
     try {
       if (!email || !password) {
-        toggleSnackbar(true)
+        setIsSnackbarOpen(true)
         setSnackbarMessage('Both email and password are required fields.')
       } else {
         const signupUrl = '/auth/signup'
@@ -33,7 +30,7 @@ const Register = ({ toggleSnackbar, setSnackbarMessage, setLoading }: IRegisterP
       }
     } catch (err: any) {
       setLoading(false)
-      toggleSnackbar(true)
+      setIsSnackbarOpen(true)
       setSnackbarMessage(err.response.data.message)
       console.error('err', err.response.data.message)
     }

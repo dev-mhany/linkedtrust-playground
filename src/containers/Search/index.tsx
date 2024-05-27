@@ -14,7 +14,7 @@ const Search = (homeProps: IHomeProps) => {
   const search = useLocation().search
   const theme = useTheme()
 
-  const { setLoading, setSnackbarMessage, toggleSnackbar } = homeProps
+  const { setLoading, setSnackbarMessage, setIsSnackbarOpen } = homeProps
   const ref = useRef<any>(null)
   const query = new URLSearchParams(search).get('query')
   const [openModal, setOpenModal] = useState<boolean>(false)
@@ -51,10 +51,10 @@ const Search = (homeProps: IHomeProps) => {
         cy.add(parsedClaims)
       } else {
         setSnackbarMessage('No results found')
-        toggleSnackbar(true)
+        setIsSnackbarOpen(true)
       }
     } catch (err: any) {
-      toggleSnackbar(true)
+      setIsSnackbarOpen(true)
       setSnackbarMessage(err.message)
     } finally {
       setLoading(false)
@@ -75,10 +75,10 @@ const Search = (homeProps: IHomeProps) => {
         cy.add({ nodes: newNodes, edges: newEdges } as any)
       } else {
         setSnackbarMessage('No results found')
-        toggleSnackbar(true)
+        setIsSnackbarOpen(true)
       }
     } catch (err: any) {
-      toggleSnackbar(true)
+      setIsSnackbarOpen(true)
       setSnackbarMessage(err.message)
     } finally {
       setLoading(false)
@@ -188,7 +188,7 @@ const Search = (homeProps: IHomeProps) => {
         selectedClaim={selectedClaim}
         setLoading={setLoading}
         setSnackbarMessage={setSnackbarMessage}
-        toggleSnackbar={toggleSnackbar}
+        setIsSnackbarOpen={setIsSnackbarOpen}
       />
 
       <Box ref={ref} sx={styles.cy} />
