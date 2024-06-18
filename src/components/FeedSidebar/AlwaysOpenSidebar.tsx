@@ -1,19 +1,19 @@
 import React from 'react'
-import { List, ListItemText, ListItemButton, Button, Box, useMediaQuery, useTheme } from '@mui/material'
-import { Home, Search } from '@mui/icons-material'
-import CreateIcon from '@mui/icons-material/Create'
+import { List, ListItemText, ListItemButton, Button, Box, useMediaQuery, useTheme, IconButton } from '@mui/material'
+import { Home, Search, Brightness7, DarkMode, Create } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
+import { checkAuth } from '../../utils/authUtils'
 
 interface SidebarProps {
-  isAuth: boolean
+  toggleTheme: () => void
+  isDarkMode: boolean
 }
 
-const AlwaysOpenSidebar: React.FC<SidebarProps> = ({ isAuth }) => {
+const AlwaysOpenSidebar: React.FC<SidebarProps> = ({ toggleTheme, isDarkMode }) => {
   const theme = useTheme()
-
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'))
-
   const navigate = useNavigate()
+  const isAuth = checkAuth()
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken')
@@ -25,11 +25,11 @@ const AlwaysOpenSidebar: React.FC<SidebarProps> = ({ isAuth }) => {
 
   return (
     <Box
-      style={{
+      sx={{
         width: '25vw',
         height: '100vh',
-        backgroundColor: '#0A1C1D',
-        color: '#fff',
+        backgroundColor: theme.palette.footerBackground,
+        color: theme.palette.texts,
         position: 'fixed',
         top: 0,
         left: 0,
@@ -42,26 +42,52 @@ const AlwaysOpenSidebar: React.FC<SidebarProps> = ({ isAuth }) => {
     >
       <List sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
         <ListItemButton sx={{ gap: '1rem', width: '100%', justifyContent: 'center' }} onClick={() => navigate('/feed')}>
-          <Home sx={{ color: '#fff' }} />
+          <Home sx={{ color: theme.palette.texts }} />
           <ListItemText primary='Home' />
         </ListItemButton>
         <ListItemButton
           sx={{ gap: '1rem', width: '100%', justifyContent: 'center' }}
           onClick={() => navigate('/search')}
         >
-          <Search sx={{ color: '#fff' }} />
+          <Search sx={{ color: theme.palette.texts }} />
           <ListItemText primary='Search' />
+        </ListItemButton>
+        <ListItemButton
+          sx={{
+            gap: '1rem',
+            width: '100%',
+            justifyContent: 'center',
+            '&:hover': {
+              backgroundColor: theme.palette.action.hover
+            }
+          }}
+          onClick={toggleTheme}
+        >
+          <IconButton
+            sx={{
+              color: theme.palette.texts,
+              '&:hover': {
+                backgroundColor: 'transparent'
+              }
+            }}
+            aria-label='toggle theme'
+            disableRipple
+          >
+            {isDarkMode ? <Brightness7 /> : <DarkMode />}
+          </IconButton>
+          <ListItemText primary={isDarkMode ? 'Light' : 'Dark'} />
         </ListItemButton>
         {isAuth ? (
           <ListItemButton sx={{ gap: '1rem', width: '100%', justifyContent: 'center' }} onClick={handleLogout}>
             <Button
+              variant='contained'
               sx={{
-                color: '#fff',
+                backgroundColor: theme.palette.buttons,
+                color: theme.palette.buttontext,
                 width: '100%',
                 maxWidth: '16vw',
-                backgroundColor: 'primary.main',
                 '&:hover': {
-                  backgroundColor: '#00695f'
+                  backgroundColor: theme.palette.buttonHover
                 }
               }}
             >
@@ -75,13 +101,14 @@ const AlwaysOpenSidebar: React.FC<SidebarProps> = ({ isAuth }) => {
               onClick={() => navigate('/login')}
             >
               <Button
+                variant='contained'
                 sx={{
-                  color: '#fff',
+                  backgroundColor: theme.palette.buttons,
+                  color: theme.palette.buttontext,
                   width: '100%',
                   maxWidth: '16vw',
-                  backgroundColor: 'primary.main',
                   '&:hover': {
-                    backgroundColor: '#00695f'
+                    backgroundColor: theme.palette.buttonHover
                   }
                 }}
               >
@@ -93,13 +120,15 @@ const AlwaysOpenSidebar: React.FC<SidebarProps> = ({ isAuth }) => {
               onClick={() => navigate('/register')}
             >
               <Button
+                variant='contained'
                 sx={{
-                  color: '#fff',
+                  backgroundColor: theme.palette.buttons,
+                  color: theme.palette.buttontext,
                   width: '100%',
                   maxWidth: '16vw',
-                  backgroundColor: 'primary.main',
+                  gap: '1rem',
                   '&:hover': {
-                    backgroundColor: '#00695f'
+                    backgroundColor: theme.palette.buttonHover
                   }
                 }}
               >
@@ -113,18 +142,18 @@ const AlwaysOpenSidebar: React.FC<SidebarProps> = ({ isAuth }) => {
         <Box sx={{ p: 2, mt: 'auto', mb: '64px', display: 'flex', justifyContent: 'center' }}>
           <Button
             variant='contained'
-            color='primary'
-            component='button'
-            startIcon={<CreateIcon />}
+            startIcon={<Create />}
             onClick={() => navigate('/')}
             sx={{
-              backgroundColor: '#009688',
+              backgroundColor: theme.palette.buttons,
+              color: theme.palette.buttontext,
               borderRadius: '30px',
               width: '16vw',
-              maxwidth: isSmallScreen ? '16vw' : '100%',
+              maxWidth: isSmallScreen ? '16vw' : '100%',
+              minWidth: '175px',
               gap: '1rem',
               '&:hover': {
-                backgroundColor: '#00796b'
+                backgroundColor: theme.palette.buttonHover
               }
             }}
           >

@@ -12,9 +12,11 @@ import Sidebar from '../Sidebar'
 
 interface NavbarProps {
   isAuth: boolean
+  toggleTheme: () => void
+  isDarkMode: boolean
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
+const Navbar: React.FC<NavbarProps> = ({ isAuth, toggleTheme, isDarkMode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
@@ -27,7 +29,13 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
   }
 
   const getPageName = () => {
-    switch (location.pathname) {
+    const path = location.pathname
+
+    if (/^\/report\/\d+$/.test(path)) {
+      return 'Claim Report'
+    }
+
+    switch (path) {
       case '/feed':
         return 'Feed of Claims'
       case '/':
@@ -49,7 +57,15 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position='fixed' sx={{ backgroundColor: '#0a1c1d', color: '#ffffff' }}>
+      <AppBar
+        position='fixed'
+        sx={{
+          backgroundColor: theme.palette.footerBackground,
+          color: theme.palette.texts,
+          backgroundImage: 'none',
+          boxShadow: 'none'
+        }}
+      >
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {(location.pathname !== '/feed' || isMediumScreen) && (
@@ -61,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
               variant='h6'
               component='div'
               sx={{
-                color: '#009688',
+                color: theme.palette.maintext,
                 fontWeight: 'bold',
                 cursor: 'pointer',
                 width: isSmallScreen ? '100%' : '23vw'
@@ -76,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
               variant='h6'
               component='div'
               sx={{
-                color: '#ffffff',
+                color: theme.palette.texts,
                 textAlign: 'center',
                 flexGrow: isSmallScreen ? 1 : 0
               }}
@@ -85,7 +101,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
               <Box
                 sx={{
                   height: '4px',
-                  backgroundColor: '#009688',
+                  backgroundColor: theme.palette.maintext,
                   marginTop: '4px',
                   borderRadius: '2px',
                   width: '100%'
@@ -98,7 +114,13 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth }) => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Sidebar isAuth={isAuth} isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <Sidebar
+        isAuth={isAuth}
+        isOpen={isSidebarOpen}
+        toggleSidebar={toggleSidebar}
+        toggleTheme={toggleTheme}
+        isDarkMode={isDarkMode}
+      />
     </Box>
   )
 }
