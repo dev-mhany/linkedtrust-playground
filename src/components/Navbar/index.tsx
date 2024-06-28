@@ -26,10 +26,6 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth, toggleTheme, isDarkMode, isSide
   const getPageName = () => {
     const path = location.pathname
 
-    if (/^\/report\/\d+$/.test(path)) {
-      return 'Claim Report'
-    }
-
     switch (path) {
       case '/':
         return 'Create Claims'
