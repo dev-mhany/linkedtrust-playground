@@ -83,6 +83,21 @@ const RenderClaimInfo = ({
     setDetailsOpen(false)
   }
 
+  const getImageForClaim = (claim: { [key: string]: string }) => {
+    if (claim.effectiveDate === '2024-05-04T12:21:01.188+00:00') {
+      return 'https://trustclaims-images.s3.us-west-1.amazonaws.com/IMG_20240503_144203.jpeg'
+    }
+    if (claim.effectiveDate === '2024-05-04T12:48:07.204+00:00') {
+      return 'https://trustclaims-images.s3.us-west-1.amazonaws.com/1714738074246.jpeg'
+    }
+    if (claim.effectiveDate === '2024-05-27T10:47:08.728+00:00') {
+      return 'https://trustclaims-images.s3.us-west-1.amazonaws.com/IMG_20240503_130439.jpeg'
+    }
+    return null
+  }
+
+  const claimImage = claim.image || getImageForClaim(claim)
+
   return (
     <>
       <Box
@@ -109,7 +124,7 @@ const RenderClaimInfo = ({
             }
           }}
         >
-          {claim.image && !imageError && (
+          {claimImage && !imageError && (
             <Box>
               <IconButton
                 onClick={() => setOpenD(true)}
@@ -119,7 +134,7 @@ const RenderClaimInfo = ({
                 }}
               >
                 <img
-                  src={claim.image}
+                  src={claimImage}
                   onError={() => setImageError(true)}
                   style={{
                     width: '60px',
@@ -259,7 +274,7 @@ const RenderClaimInfo = ({
         )}
       </Box>
 
-      {openD && claim.image && (
+      {openD && claimImage && (
         <Dialog open={openD} onClose={() => setOpenD(false)}>
           <Close
             sx={{
@@ -276,7 +291,7 @@ const RenderClaimInfo = ({
             onClick={() => setOpenD(false)}
           />
           <img
-            src={claim.image}
+            src={claimImage}
             style={{
               width: '100%',
               maxHeight: '100%'
