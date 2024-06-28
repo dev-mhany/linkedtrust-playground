@@ -162,7 +162,7 @@ const Footer: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
       <Box
         sx={{
           display: 'flex',
-          gap: '10px',
+          gap: '5px',
           textAlign: 'center',
           justifyContent: 'center',
           flexDirection: 'row',

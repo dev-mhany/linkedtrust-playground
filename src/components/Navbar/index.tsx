@@ -31,8 +31,6 @@ const Navbar: React.FC<NavbarProps> = ({ isAuth, toggleTheme, isDarkMode, isSide
     }
 
     switch (path) {
-      // case '/feed':
-      //   return 'Recent Attestations'
       case '/':
         return 'Create Claims'
       case '/explore':
