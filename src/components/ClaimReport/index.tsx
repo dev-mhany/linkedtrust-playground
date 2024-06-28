@@ -115,7 +115,7 @@ const DonationReport: React.FC = () => {
           mt: '5vh',
           width: isMediumScreen ? '97%' : '95%',
           flexDirection: 'column',
-          // backgroundColor: theme.palette.menuBackground,
+          backgroundColor: theme.palette.menuBackground,
           borderRadius: '20px',
           padding: '20px'
         }}

@@ -226,7 +226,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                 mb: '1vh',
                 width: isMediumScreen ? '97%' : '95%',
                 flexDirection: 'column',
-                // backgroundColor: theme.palette.menuBackground,
+                backgroundColor: theme.palette.menuBackground,
                 borderRadius: '20px',
                 padding: '20px'
               }}
@@ -329,7 +329,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                             fontWeight: 'bold',
                             marginRight: '10px',
                             p: '4px',
-                            color: theme.palette.texts,
+                            color: theme.palette.sidecolor,
                             '&:hover': {
                               backgroundColor: theme.palette.cardsbuttons
                             }
@@ -346,7 +346,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                               fontWeight: 'bold',
                               marginRight: '10px',
                               p: '4px',
-                              color: theme.palette.texts,
+                              color: theme.palette.sidecolor,
                               '&:hover': {
                                 backgroundColor: theme.palette.cardsbuttons
                               }
@@ -364,7 +364,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                             fontWeight: 'bold',
                             marginRight: '10px',
                             p: '4px',
-                            color: theme.palette.texts,
+                            color: theme.palette.sidecolor,
                             '&:hover': {
                               backgroundColor: theme.palette.cardsbuttons
                             }
