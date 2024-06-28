@@ -1,6 +1,13 @@
 import React from 'react'
 import { Drawer, List, ListItemText, ListItemButton, Box, useTheme, Typography, useMediaQuery } from '@mui/material'
-import { Home, Search, DarkMode, Logout, Login, HowToReg } from '@mui/icons-material'
+import {
+  Home,
+  Search,
+  DarkMode,
+  Logout,
+  Login
+  //  HowToReg
+} from '@mui/icons-material'
 import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined'
@@ -126,13 +133,13 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <Login sx={iconStyle} />
                 <ListItemText primary='Login' sx={{ display: isOpen ? 'block' : 'none', transition: 'all 0.3s' }} />
               </ListItemButton>
-              <ListItemButton
+              {/* <ListItemButton
                 sx={{ gap: '32px', justifyContent: 'center', ...getActiveStyle('/register') }}
                 onClick={() => navigate('/register')}
               >
                 <HowToReg sx={iconStyle} />
                 <ListItemText primary='Register' sx={{ display: isOpen ? 'block' : 'none', transition: 'all 0.3s' }} />
-              </ListItemButton>
+              </ListItemButton> */}
             </>
           )}
         </List>
