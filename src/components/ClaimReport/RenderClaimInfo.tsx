@@ -109,19 +109,17 @@ const RenderClaimInfo = ({
           backgroundColor: theme.palette.cardBackground,
           borderRadius: '20px',
           color: theme.palette.texts,
-          transition: 'min-height 0.3s ease-in-out',
-          padding: '20px'
+          transition: 'min-height 0.3s ease-in-out'
+          // padding: '20px'
         }}
       >
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
-            gap: '20px',
-            flexDirection: {
-              xs: 'column',
-              sm: 'row'
-            }
+            alignItems: 'revert',
+            justifyContent: 'flex-start',
+            flexWrap: 'wrap'
+            // gap: '20px',
           }}
         >
           {claimImage && !imageError && (
@@ -130,7 +128,8 @@ const RenderClaimInfo = ({
                 onClick={() => setOpenD(true)}
                 sx={{
                   padding: 0,
-                  borderRadius: '50%'
+                  borderRadius: '50%',
+                  top: 0
                 }}
               >
                 <img
@@ -247,7 +246,7 @@ const RenderClaimInfo = ({
                 color: theme.palette.buttontext
               }}
             >
-              Read More
+              View Details
             </Button>
             {claim.stars && (
               <Rating
