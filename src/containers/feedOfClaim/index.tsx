@@ -226,7 +226,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                 mb: '1vh',
                 width: isMediumScreen ? '97%' : '95%',
                 flexDirection: 'column',
-                backgroundColor: theme.palette.menuBackground,
+                // backgroundColor: theme.palette.menuBackground,
                 borderRadius: '20px',
                 padding: '20px'
               }}
