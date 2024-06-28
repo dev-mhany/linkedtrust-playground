@@ -3,7 +3,6 @@ import { Box, TextField, IconButton, useMediaQuery } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import { useState, useEffect, useRef } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { letterSpacing } from '@mui/system'
 
 const SearchBar = () => {
   const theme = useTheme()

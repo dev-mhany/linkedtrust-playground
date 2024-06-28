@@ -53,6 +53,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     minHeight: '65px'
   })
 
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register'
+
   if (isMobile) {
     return <BottomNav isAuth={isAuth} toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
   }
@@ -74,8 +76,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           overflow: 'hidden',
           borderRight: 'none',
           borderRadius: '0 10px 10px 0',
-          marginTop: isNavbarVisible ? '64px' : '0',
-          height: isNavbarVisible ? 'calc(100vh - 64px)' : '100vh'
+          marginTop: isNavbarVisible && !isAuthPage ? '64px' : '0',
+          height: isNavbarVisible && !isAuthPage ? 'calc(100vh - 64px)' : '100vh'
         }
       }}
     >
