@@ -25,7 +25,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ isAuth, toggleTheme, isDarkMode }
   }
 
   const getActiveStyle = (path: string) => ({
-    backgroundColor: location.pathname === path ? theme.palette.footerBackground : 'transparent',
+    backgroundColor: location.pathname === path ? theme.palette.pageBackground : 'transparent',
     borderRadius: '0 0 50% 50%',
     transition: 'background-color 0.3s',
     marginBottom: '4px',

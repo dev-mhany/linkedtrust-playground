@@ -118,8 +118,8 @@ const App = () => {
             backgroundColor: theme => theme.palette.pageBackground,
             fontSize: 'calc(3px + 2vmin)',
             overflow: 'hidden',
-            marginLeft: isMediumScreen ? '0' : isSidebarOpen ? '20vw' : '4.8vw',
-            width: isMediumScreen ? '100%' : `calc(100% - ${isSidebarOpen ? '20vw' : '4.8vw'})`,
+            marginLeft: isMediumScreen ? '0' : isSidebarOpen ? '19.6vw' : '4.8vw',
+            width: isMediumScreen ? '100%' : `calc(100% - ${isSidebarOpen ? '19.6vw' : '4.8vw'})`,
             transition: 'margin-left 0.3s, width 0.3s',
             marginBottom: isMediumScreen ? '60px' : '0'
           }}

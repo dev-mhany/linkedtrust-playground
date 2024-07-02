@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import { Close } from '@mui/icons-material'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { useTheme } from '@mui/system'
+import { borderRadius, useTheme } from '@mui/system'
 
 const RenderClaimInfo = ({
   claim,
@@ -82,7 +82,7 @@ const RenderClaimInfo = ({
   const handleDetailsClose = () => {
     setDetailsOpen(false)
   }
-
+  //TODO: Remove this after fixing image issue in backend
   const getImageForClaim = (claim: { [key: string]: string }) => {
     if (claim.effectiveDate === '2024-05-04T12:21:01.188+00:00') {
       return 'https://trustclaims-images.s3.us-west-1.amazonaws.com/IMG_20240503_144203.jpeg'
@@ -122,7 +122,7 @@ const RenderClaimInfo = ({
             // gap: '20px',
           }}
         >
-          {claimImage && !imageError && (
+          {/* {claimImage && !imageError && (
             <Box>
               <IconButton
                 onClick={() => setOpenD(true)}
@@ -144,7 +144,7 @@ const RenderClaimInfo = ({
                 />
               </IconButton>
             </Box>
-          )}
+          )} */}
           <Box
             sx={{
               paddingInline: '10px',
@@ -224,7 +224,7 @@ const RenderClaimInfo = ({
           </Box>
         </Box>
 
-        {hasExtraDetails && (
+        {/* {hasExtraDetails && (
           <Box
             sx={{
               display: 'flex',
@@ -242,8 +242,9 @@ const RenderClaimInfo = ({
               onClick={handleDetailsOpen}
               variant='contained'
               sx={{
-                backgroundColor: theme.palette.buttons,
-                color: theme.palette.buttontext
+                backgroundColor: theme.palette.smallButton,
+                color: theme.palette.buttontext,
+                borderRadius: '91px'
               }}
             >
               View Details
@@ -270,7 +271,7 @@ const RenderClaimInfo = ({
               />
             )}
           </Box>
-        )}
+        )} */}
       </Box>
 
       {openD && claimImage && (
