@@ -30,19 +30,21 @@ const Search = (homeProps: IHomeProps) => {
   const layoutOptions = {
     directed: !isMediumUp,
     fit: true,
-    spacingFactor: isMediumUp ? 0.7 : 1.1
+    spacingFactor: isMediumUp ? 0.7 : 1.1,
+    padding: isMediumUp ? 80 : 0
   }
 
-  const runCy = () => {
-    if (!cy) return
-    cy.layout({
+  const runCy = (cyInstance: Cytoscape.Core | undefined) => {
+    if (!cyInstance) return
+    const layout = cyInstance.layout({
       name: layoutName,
-      ...layoutOptions,
-      // padding: isMediumUp ? 80 : 0,
-      animate: true,
-      animationDuration: 1000
-    }).run()
-    cy.center()
+      ...layoutOptions
+    })
+    layout.run()
+    cyInstance.animate({
+      fit: { eles: cyInstance.elements(), padding: 20 },
+      duration: 1000
+    })
   }
 
   const fetchQueryClaims = async (query: string, page: number) => {
@@ -65,7 +67,7 @@ const Search = (homeProps: IHomeProps) => {
       setSnackbarMessage(err.message)
     } finally {
       setLoading(false)
-      runCy()
+      runCy(cy)
     }
   }
 
@@ -88,7 +90,7 @@ const Search = (homeProps: IHomeProps) => {
       setSnackbarMessage(err.message)
     } finally {
       setLoading(false)
-      runCy()
+      runCy(cy)
     }
   }
 
