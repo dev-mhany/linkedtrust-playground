@@ -38,7 +38,7 @@ const Search = (homeProps: IHomeProps) => {
     cy.layout({
       name: layoutName,
       ...layoutOptions,
-      padding: isMediumUp ? 80 : 0,
+      // padding: isMediumUp ? 80 : 0,
       animate: true,
       animationDuration: 1000
     }).run()
