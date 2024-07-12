@@ -38,6 +38,8 @@
     "slick-carousel": "^1.8.1",
     "source-map-support": "^0.5.21",
     "styled-components": "^6.1.11",
+    "@types/styled-components": "^5.1.34",
+    "react-day-and-night-toggle": "^1.0.18",
     "update": "^0.7.4"
   },
   "devDependencies": {

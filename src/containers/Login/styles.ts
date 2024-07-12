@@ -13,7 +13,7 @@ const styles = {
     borderRadius: '10px'
   },
   inputField: {
-    backgroundColor: 'white'
+    backgroundColor: '#00000000'
   },
   authbtn: {
     display: 'flex',
@@ -44,7 +44,7 @@ const styles = {
     fontSize: '16px'
   },
   authIcon: {
-    marginLeft: '10px'
+    fontSize: '2rem'
   }
 }
 export default styles

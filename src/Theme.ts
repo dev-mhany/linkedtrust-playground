@@ -30,6 +30,7 @@ declare module '@mui/material/styles' {
     cardsbuttons: string
     sidecolor: string
     nodeBackground: string
+    darkinputtext: string
   }
 
   interface PaletteOptions {
@@ -61,6 +62,7 @@ declare module '@mui/material/styles' {
     cardsbuttons?: string
     sidecolor?: string
     nodeBackground?: string
+    darkinputtext?: string
   }
 
   interface TypographyVariants {
@@ -85,6 +87,21 @@ declare module '@mui/material/Typography' {
 }
 
 const darkModeTheme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 100px #172D2D inset !important;
+      -webkit-text-fill-color: #ffffff !important;
+      border-top-left-radius: initial !important;
+      border-top-right-radius: initial !important;
+      }
+      `
+    }
+  },
   palette: {
     mode: 'dark',
     background: {
@@ -102,7 +119,7 @@ const darkModeTheme = createTheme({
     footerText: '#ffffff',
     menuBackground: '#172d2d',
     pageBackground: '#0A1C1D',
-    formBackground: '#0A1C1D',
+    formBackground: '#172D2D',
     formMainText: '#ffffff',
     cardBackground: '#223B3A',
     cardBackgroundBlur: '#43434380',
@@ -117,6 +134,7 @@ const darkModeTheme = createTheme({
     borderColor: '#008a7cdc',
     shadows: '#00000040',
     sidecolor: '#ffffff',
+    darkinputtext: '#ffffff',
     nodeBackground: '#4C726F'
   },
   breakpoints: {
@@ -131,6 +149,21 @@ const darkModeTheme = createTheme({
 })
 
 const lightModeTheme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover,
+      input:-webkit-autofill:focus,
+      input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 100px #ffffff inset !important;
+      -webkit-text-fill-color: #0A1C1D !important;
+      border-top-left-radius: initial !important;
+      border-top-right-radius: initial !important;
+      }
+      `
+    }
+  },
   palette: {
     mode: 'light',
     background: {
@@ -163,6 +196,7 @@ const lightModeTheme = createTheme({
     borderColor: '#00796B80',
     shadows: '#00000020',
     sidecolor: '#0A1C1D',
+    darkinputtext: '#0A1C1D',
     nodeBackground: '#79A8A4'
   },
   breakpoints: {
