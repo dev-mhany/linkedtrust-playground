@@ -32,6 +32,7 @@ const App = () => {
   const navigate = useNavigate()
   const theme = useTheme()
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'))
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('md'))
 
   const checkAuth = () => {
     const accessToken = localStorage.getItem('accessToken')
@@ -69,8 +70,8 @@ const App = () => {
     isDarkMode
   }
 
-  const isLoginPage = location.pathname === '/login'
-  const isRegisterPage = location.pathname === '/register'
+  const isLoginPage = window.location.pathname === '/login'
+  const isRegisterPage = window.location.pathname === '/register'
 
   const globalStyles = (
     <GlobalStyles
@@ -81,7 +82,8 @@ const App = () => {
         },
         body: {
           '-ms-overflow-style': 'none',
-          'scrollbar-width': 'none'
+          'scrollbar-width': 'none',
+          backgroundColor: theme.palette.pageBackground
         }
       }}
     />
@@ -102,29 +104,31 @@ const App = () => {
         />
       )}
       <Box sx={{ display: 'flex' }}>
-        {!isLoginPage && !isRegisterPage && (
-          <Sidebar
-            isAuth={checkAuth()}
-            isOpen={isSidebarOpen}
-            toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
-            toggleTheme={toggleTheme}
-            isDarkMode={isDarkMode}
-            isNavbarVisible={isNavbarVisible}
-          />
-        )}
+        <Sidebar
+          isAuth={checkAuth()}
+          isOpen={isSidebarOpen}
+          toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+          toggleTheme={toggleTheme}
+          isDarkMode={isDarkMode}
+          isNavbarVisible={isNavbarVisible}
+        />
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             minHeight: '100vh',
-            backgroundColor: theme => theme.palette.pageBackground,
+            backgroundColor: theme.palette.pageBackground,
             fontSize: 'calc(3px + 2vmin)',
             overflow: 'hidden',
-            marginLeft: isMediumScreen || isLoginPage || isRegisterPage ? '0' : isSidebarOpen ? '19.6vw' : '4.8vw',
-            width:
-              isMediumScreen || isLoginPage || isRegisterPage
-                ? '100%'
-                : `calc(100% - ${isSidebarOpen ? '19.6vw' : '4.8vw'})`,
+            right: 0,
+            marginLeft: isMediumScreen
+              ? '0'
+              : isSidebarOpen
+              ? `calc(19.6vw + ${isLargeScreen ? '42px' : '0'})`
+              : `calc(4.8vw + ${isLargeScreen ? '42px' : '0'})`,
+            width: isMediumScreen
+              ? '100%'
+              : `calc(100% - ${isSidebarOpen ? '19.6vw' : '4.8vw'} - ${isLargeScreen ? '42px' : '0'})`,
             transition: 'margin-left 0.3s, width 0.3s',
             marginBottom: isMediumScreen ? '60px' : '0'
           }}

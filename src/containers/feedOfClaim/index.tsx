@@ -222,12 +222,12 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                 display: 'flex',
                 justifyContent: 'center',
                 position: 'relative',
-                mt: '8vh',
-                mb: '1vh',
-                width: isMediumScreen ? '97%' : '95%',
+                mt: '64px',
+                // mb: '1vh',
+                width: isMediumScreen ? '97%' : '100%',
                 flexDirection: 'column',
                 backgroundColor: theme.palette.menuBackground,
-                borderRadius: '20px',
+                borderRadius: isMediumScreen ? '10px' : '10px 0px 0px 10px',
                 padding: '20px'
               }}
             >
@@ -243,7 +243,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                     fontWeight: 'bold'
                   }}
                 >
-                  Recent Attestations
+                  Feed of Claims
                   <Box
                     sx={{
                       height: '4px',
@@ -254,7 +254,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                     }}
                   />
                 </Typography>
-              </Box>{' '}
+              </Box>
               {visibleClaims.map((claim: any, index: number) => (
                 <Box key={claim.id} sx={{ marginBottom: '15px' }}>
                   <Card
@@ -326,7 +326,6 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                           variant='text'
                           sx={{
                             fontSize: isMediumScreen ? '8px' : '16px',
-                            fontWeight: 'bold',
                             marginRight: '10px',
                             p: '4px',
                             color: theme.palette.sidecolor,
@@ -335,7 +334,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                             }
                           }}
                         >
-                          VALIDATE
+                          Validate
                         </Button>
                         <Link to={'/report/' + claim.claim_id}>
                           <Button
@@ -343,7 +342,6 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                             variant='text'
                             sx={{
                               fontSize: isMediumScreen ? '8px' : '16px',
-                              fontWeight: 'bold',
                               marginRight: '10px',
                               p: '4px',
                               color: theme.palette.sidecolor,
@@ -361,7 +359,6 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
                           variant='text'
                           sx={{
                             fontSize: isMediumScreen ? '8px' : '16px',
-                            fontWeight: 'bold',
                             marginRight: '10px',
                             p: '4px',
                             color: theme.palette.sidecolor,
@@ -547,7 +544,7 @@ const FeedClaim: React.FC<IHomeProps> = ({ toggleTheme, isDarkMode }) => {
             </Box>
           ) : (
             <Box sx={{ textAlign: 'center', mt: '20px' }}>
-              <Typography variant='h6'>No results found for "{searchTerm}"</Typography>
+              <Typography variant='h6'>No results found{searchTerm ? ` for ${searchTerm}` : '.'}</Typography>
             </Box>
           )}
         </>
